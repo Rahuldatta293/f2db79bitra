@@ -2,19 +2,9 @@ extends layout
 
 block content
   h1= title
-  - var results = [{"iphone_model":"Fourteen Series","iphone_Size":"128GB","iphone_Cost":"999$"},{"iphone_model":"Thirteen Series","iphone_Size":"256GB","iphone_Cost":"1100$"},{"iphone_model":"Twelve Series","iphone_Size":"512GB","iphone_Cost":"1200$"}];
+  - let iphone  = results
   div(class="container-fluid")
     div(class="row")
     each item in results
       div(class="col-sm-2") Iphone Model:#{item.iphone_model}, iphone size:#{item.iphone_Size}, iphone Cost:#{item.iphone_Cost}
   br
-  h5= 'price of purchase'
-
-  div(class="container-fluid")
-    each iphone,index in results
-      div(class="row", onclick=`buy(${index})`)
-        div(class="col-sm-2") <br>iphone #{index}: #{iphone.iphone_model} size:#{iphone.Size} Cost:#{iphone.Cost}
-  script.
-        function buy(price){
-          alert('You purchased item ' + price)
-        }
