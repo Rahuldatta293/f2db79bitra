@@ -42,7 +42,7 @@ await Iphone.deleteMany();
   iphone_Cost:1100});
   instance2.save( function(err,doc) {
   if(err) return console.error(err);
-  console.log("First object saved")
+  console.log("Second object saved")
   });
   let instance3 = new
   Iphone({iphone_model:"Twelve Series", iphone_Size:'small',

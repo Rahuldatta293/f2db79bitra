@@ -9,13 +9,13 @@ var iphone_controller = require('../controllers/iphone');
 router.get('/', api_controller.api);
 /// IPHONE ROUTES ///
 // POST request for creating a iphone.
-router.post('/iphone', iphone_controller.iphone_create_post);
+router.post('/iphones', iphone_controller.iphone_create_post);
 // DELETE request to delete iphone.
-router.delete('/iphone/:id', iphone_controller.iphone_delete);
+router.delete('/iphones/:id', iphone_controller.iphone_delete);
 // PUT request to update iphone.
-router.put('/iphone/:id', iphone_controller.iphone_update_put);
+router.put('/iphones/:id', iphone_controller.iphone_update_put);
 // GET request for one iphone.
-router.get('/iphone/:id', iphone_controller.iphone_detail);
+router.get('/iphones/:id', iphone_controller.iphone_detail);
 // GET request for list of all iphone items.
-router.get('/iphone', iphone_controller.iphone_list);
+router.get('/iphones', iphone_controller.iphone_list);
 module.exports = router;
