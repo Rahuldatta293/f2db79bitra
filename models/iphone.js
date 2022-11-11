@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 const iphoneSchema = mongoose.Schema({
-iphone_mode: String,
+iphone_model: String,
 iphone_Size: String,
 iphone_Cost: Number
 })
