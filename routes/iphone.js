@@ -8,5 +8,8 @@ var router = express.Router();
 /* GET home page. */
 router.get('/', iphone_controlers.iphone_view_all_Page);
 
+/* GET detail costume page */
+router.get('/detail', iphone_controlers.iphone_view_one_Page);
+
 module.exports = router;
 

@@ -99,4 +99,31 @@ exports.iphone_update_put = async function(req, res) {
     failed`);
     }
     };
+
+    // Handle Iphone delete on DELETE.
+exports.iphone_delete = async function(req, res) {
+    console.log("delete " + req.params.id)
+    try {
+    result = await iphone.findByIdAndDelete( req.params.id)
+    console.log("Removed " + result)
+    res.send(result)
+    } catch (err) {
+    res.status(500)
+    res.send(`{"error": Error deleting ${err}}`);
+    }
+    };
+
+    // Handle a show one view with id specified by query
+exports.iphone_view_one_Page = async function(req, res) {
+    console.log("single view for id " + req.query.id)
+    try{
+    result = await iphone.findById( req.query.id)
+    res.render('iphonedetail',
+    { title: 'Iphone Detail', toShow: result });
+    }
+    catch(err){
+    res.status(500)
+    res.send(`{'error': '${err}'}`);
+    }
+    };
     
