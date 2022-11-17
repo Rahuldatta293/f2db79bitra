@@ -1,0 +1,45 @@
+extends layout 
+ 
+block content 
+  h1= title 
+  if (toShow == null) 
+    h2 No instance to update 
+  else
+    - let iphoneid = toShow._id 
+    - let iphone_model = toShow.iphone_model 
+    - let iphone_Size = toShow.iphone_Size 
+    - let iphone_Cost = toShow.iphone_Cost 
+   
+    div.row(class='mb-2') 
+        div.mr-1 ID is 
+        div #{iphoneid} 
+    - let actionid = "/resource/iphone/" + iphoneid 
+    form(id='iphoneForm', action= actionid, method="PUT") 
+        div.form-group 
+            label.iphoneAttr(for='iphone_model') Iphone model 
+            input#iphone_model(type='text', name='iphone_model', value= iphone_model ) 
+        div.form-group 
+            label.iphoneAttr(for='iphone_Size') Iphone Size  
+            input#iphone_Size(type='text', name='iphone_Size', value= iphone_Size ) 
+        div.form-group 
+            label.iphoneAttr(for='iphone_Cost') Iphone Cost  
+            input#iphone_Cost(type='number', name='iphone_Cost', value= iphone_Cost ) 
+        input(type="submit") 
+ 
+    script. 
+        document.forms['iphoneForm'].addEventListener('submit', (event) => { 
+        event.preventDefault(); 
+        // TODO do something here to show user that form is being submitted 
+        fetch(event.target.action, { 
+            method: 'PUT', 
+            body: new URLSearchParams(new FormData(event.target)) // event.target is the form 
+        }).then((resp) => { 
+            return resp.text(); // or resp.text() or whatever the server sends 
+        }).then((body) => { 
+            alert("Update succeded") 
+            // TODO handle body 
+        }).catch((error) => { 
+            // TODO handle error 
+            alert("Update failed " + error ) 
+        }); 
+        });

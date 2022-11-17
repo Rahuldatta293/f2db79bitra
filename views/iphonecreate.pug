@@ -1,0 +1,42 @@
+extends layout 
+ 
+block content 
+  div(class='container', style='border: 5px solid #FF0000; width: 450px; padding:10px;')
+    h1(style="text-align: center; color: #0542D8; font-weight: bold")= title 
+    br
+    div(class='container' style="text-align: center; width: 450px;")
+        form(id='IphoneForm', action="/resource/iphone", method="POST") 
+            div.form-group 
+                div(class="form-group row mb-2") 
+                    label.iphoneAttr(for='iphone_model', class='col-4 col-from-label') Iphone model 
+                    div(class='col-6' style='width: 250px;')
+                        input#iphone_model(class='form-control form-control-sm', type='text', name='iphone_model') 
+            div.form-group 
+                div(class="form-group row mb-2")
+                    label.iphoneAttr(for='iphone_Size', class='col-4 col-from-label') Iphone size 
+                    div(class='col-6' style='width: 250px;')
+                        input#iphone_Size(class='form-control form-control-sm', type='text', name='iphone_Size') 
+            div.form-group
+                div(class="form-group row mb-2") 
+                    label.iphoneAttr(for='iphone_Cost', class='col-4 col-from-label') Iphone Cost 
+                    div(class='col-6' style='width: 250px;')
+                        input#iphone_Cost(class='form-control form-control-sm', class='form-control form-control-sm' type='number', name='iphone_Cost') 
+            input(type="submit" class="btn btn-secondary") 
+ 
+  script. 
+    document.forms['IphoneForm'].addEventListener('submit', (event) => { 
+      event.preventDefault(); 
+      // TODO do something here to show user that form is being submitted 
+      fetch(event.target.action, { 
+        method: 'POST', 
+        body: new URLSearchParams(new FormData(event.target)) // event.target is the form 
+      }).then((resp) => { 
+        return resp.text(); // or resp.text() or whatever the server sends 
+      }).then((body) => { 
+        alert("Save succeded") 
+        // TODO handle body 
+      }).catch((error) => { 
+        // TODO handle error 
+        alert("Save failed " + error ) 
+      }); 
+    });

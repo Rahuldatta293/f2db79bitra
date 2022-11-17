@@ -1,20 +1,23 @@
 extends layout
 block content
     h1= title
-    - let iphoneid = toShow._id
-    - let iphone_model = toShow.iphone_model
-    - let iphone_Size = toShow.iphone_Size
-    - let iphone_Cost = toShow.iphone_Cost
-    div
-        div.row
-        div(class='iphoneAttr mr-3') Iphone  ID is:
-        div #{iphoneid}
-        div.row
-        div(class='costumeAttr mr-3') Iphone  Model  is:
-        div #{iphone_model}
-        div.row
-        div(class='costumeAttr mr-3') Iphone Size  is:
-        div #{iphone_Size}
-        div.row
-        div(class='costumeAttr mr-3') Iphone Cost  is:
-        div #{iphone_Cost}
+    if (toShow == null) 
+        h2 No instance to details  
+    else
+        - let iphoneid = toShow._id
+        - let iphone_model = toShow.iphone_model
+        - let iphone_Size = toShow.iphone_Size
+        - let iphone_Cost = toShow.iphone_Cost
+        div
+            div.row
+            div(class='iphoneAttr mr-3') Iphone  ID is:
+            div #{iphoneid}
+            div.row
+            div(class='iphoneAttr mr-3') Iphone  Model  is:
+            div #{iphone_model}
+            div.row
+            div(class='iphoneAttr mr-3') Iphone Size  is:
+            div #{iphone_Size}
+            div.row
+            div(class='iphoneAttr mr-3') Iphone Cost  is:
+            div #{iphone_Cost}

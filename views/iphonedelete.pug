@@ -1,0 +1,71 @@
+extends layout 
+ 
+block content 
+  h1= title 
+ 
+  if (toShow == null) 
+    h2 No instance to delete 
+  else 
+    - let iphoneid = toShow._id 
+    - let iphone_model = toShow.iphone_model
+    - let iphone_Size = toShow.iphone_Size 
+    - let iphone_Cost = toShow.iphone_Cost 
+    - let actionid = "/resource/iphone/" + iphoneid 
+    script let actionid = "#{actionid}" 
+    div 
+      div.row 
+        div(class='iphoneAttr mr-3') Iphone ID is: 
+        div #{iphoneid} 
+      div.row 
+        div(class='iphoneAttr mr-3') Iphone model  is: 
+        div #{iphone_model} 
+      div.row 
+        div(class='iphoneAttr mr-3') Iphone Size  is: 
+        div #{iphone_Size} 
+      div.row 
+        div(class='iphoneAttr mr-3') Iphone Cost  is: 
+        div #{iphone_Cost} 
+ 
+    button(class="btn btn-danger m-2" onclick="deleteOnid()") Delete 
+    button(class="btn btn-secondary m-2" onclick="cancel()") Cancel 
+ 
+  script. 
+    function cancel() { 
+      // Go back to the home page for the costume collection 
+      window.location.href='/iphone' 
+    } 
+  script.
+
+    function deleteOnid() {
+
+      console.log("starting delete")
+
+      // delete first
+
+      // Don't need a body for the delete
+
+      fetch(actionid, {
+
+        method: 'DELETE'      
+
+      }).then((resp) => {
+
+        return resp.text(); // or resp.text() or whatever the server sends
+
+      }).then((body) => {
+
+        alert("Delete succeded")
+
+        window.location.href='/iphone'
+
+        // TODO handle body
+
+      }).catch((error) => {
+
+        // TODO handle error
+
+        alert("Delete failed " + error )
+
+      });
+
+    }
