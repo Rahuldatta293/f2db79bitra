@@ -4,7 +4,12 @@ block content
   h1= title
   - let iphone  = results
   div(class="container-fluid")
-    div(class="row")
-    each item in results
-      div(class="col-sm-2") Iphone Model:#{item.iphone_model}, iphone size:#{item.iphone_Size}, iphone Cost:#{item.iphone_Cost}
-  br
+    div(class="row m-1")
+      each item in results
+       - let destination = `dispatch(\"/iphone/update?id=${item._id}\")`
+       div(class="col-sm-2") Iphone Model:#{item.iphone_model}, iphone size:#{item.iphone_Size}, iphone Cost:#{item.iphone_Cost}
+        button.btn( class="btn-primary ml-1", onclick= destination) Update
+  script.
+   function dispatch(path){
+    window.location.href=path
+   }     
