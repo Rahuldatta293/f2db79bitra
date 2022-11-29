@@ -7,6 +7,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var Iphone = require("./models/iphone");
 
+
 require('dotenv').config();
 const connectionString =
 process.env.MONGO_CON
@@ -95,19 +96,29 @@ app.use('/iphone', iphoneRouter);
 app.use('/gridbuild', gridbuildRouter);
 app.use('/selector', selectorRouter);
 app.use('/resource', resourceRouter);
+
+var authSchema = mongoose.Schema({ 
+  username: String,
+  password: String
+});
+authSchema.methods.validPassword = function( pwd ) {
+  // EXAMPLE CODE!
+  return ( this.password === pwd );
+};
+
 passport.use(new LocalStrategy(
-  function(username, password, done) {
-  Account.findOne({ username: username }, function (err, user) {
-  if (err) { return done(err); }
-  if (!user) {
-  return done(null, false, { message: 'Incorrect username.' });
-  }
-  if (!user.validPassword(password)) {
-  return done(null, false, { message: 'Incorrect password.' });
-  }
-  return done(null, user);
-  });
-  }))
+  function (username, password, done) {
+    Account.findOne({ username: username }, function (err, user) {
+      if (err) { return done(err); }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+     // if (!user.validPassword(password)) {
+     //   return done(null, false, { message: 'Incorrect password.' });
+     // }
+      return done(null, user);
+    });
+  }));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
