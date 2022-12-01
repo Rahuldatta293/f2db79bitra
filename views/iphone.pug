@@ -6,10 +6,21 @@ block content
   div(class="container-fluid")
     div(class="row m-1")
       each item in results
-       - let destination = `dispatch(\"/iphone/update?id=${item._id}\")`
+       - let destination1 = `dispatch(\"/iphone/update?id=${item._id}\")`
+       - let destination2 = `dispatch(\"/iphone/create\")`
+       - let destination3 = `dispatch(\"/iphone/detail?id=${item._id}\")`
+       - let destination4 = `dispatch(\"/iphone/delete?id=${item._id}\")`
        div(class="col-sm-2") Iphone Model:#{item.iphone_model}, iphone size:#{item.iphone_Size}, iphone Cost:#{item.iphone_Cost}
-        button.btn( class="btn-primary ml-1", onclick= destination) Update
-  script.
-   function dispatch(path){
-    window.location.href=path
-   }     
+        button.btn( class="btn-primary ml-1", onclick= destination2) Create 
+        button.btn( class="btn-primary ml-1", onclick= destination1) Update 
+        button.btn( class="btn-primary ml-1", onclick= destination3) Detail
+        button.btn( class="btn-primary ml-1", onclick= destination4) Delete
+
+  script. 
+    function buy(indexNum) {
+      alert(`You purchased item ${indexNum}`);
+    }
+    function dispatch(path){ 
+      window.location.href=path 
+    } 
+     

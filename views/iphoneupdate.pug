@@ -13,7 +13,7 @@ block content
     div.row(class='mb-2') 
         div.mr-1 ID is 
         div #{iphoneid} 
-    - let actionid = "/resource/iphone/" + iphoneid 
+    - let actionid = "/resource/iphones/" + iphoneid 
     form(id='iphoneForm', action= actionid, method="PUT") 
         div.form-group 
             label.iphoneAttr(for='iphone_model') Iphone model 
@@ -34,9 +34,14 @@ block content
             method: 'PUT', 
             body: new URLSearchParams(new FormData(event.target)) // event.target is the form 
         }).then((resp) => { 
-            return resp.text(); // or resp.text() or whatever the server sends 
+            return resp.json(); // or resp.text() or whatever the server sends 
         }).then((body) => { 
-            alert("Update succeded") 
+            
+            console.log(body)
+            if(body.error)
+             alert('Please Enter Valid Details')
+            else
+             alert("Update succeded") 
             // TODO handle body 
         }).catch((error) => { 
             // TODO handle error 

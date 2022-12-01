@@ -5,7 +5,7 @@ block content
     h1(style="text-align: center; color: #0542D8; font-weight: bold")= title 
     br
     div(class='container' style="text-align: center; width: 450px;")
-        form(id='IphoneForm', action="/resource/iphone", method="POST") 
+        form(id='IphoneForm', action="/resource/iphones", method="POST") 
             div.form-group 
                 div(class="form-group row mb-2") 
                     label.iphoneAttr(for='iphone_model', class='col-4 col-from-label') Iphone model 
@@ -31,12 +31,16 @@ block content
         method: 'POST', 
         body: new URLSearchParams(new FormData(event.target)) // event.target is the form 
       }).then((resp) => { 
-        return resp.text(); // or resp.text() or whatever the server sends 
+        return resp.json(); // or resp.text() or whatever the server sends 
       }).then((body) => { 
-        alert("Save succeded") 
+          console.log(body)
+          if(body.error)
+            alert("Values entered are not valid") 
+          else
+            alert("save Successful")
         // TODO handle body 
       }).catch((error) => { 
         // TODO handle error 
-        alert("Save failed " + error ) 
+        alert("Save failed - Enter Valid Details "  ) 
       }); 
     });

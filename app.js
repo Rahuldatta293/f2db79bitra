@@ -8,6 +8,21 @@ var LocalStrategy = require('passport-local').Strategy;
 var Iphone = require("./models/iphone");
 
 
+passport.use(new LocalStrategy(function (username, password, done) {
+  Account.findOne({ username: username }, function (err, user) {
+    if (err) { return done(err); }
+    if (!user) {
+      return done(null, false, { message: 'Incorrect username.' });
+    }
+    if (!user.validPassword(password)) {
+      return done(null, false, { message: 'Incorrect password.' });
+    }
+    return done(null, user);
+  });
+}
+));
+
+
 require('dotenv').config();
 const connectionString =
 process.env.MONGO_CON
@@ -23,13 +38,8 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connectionerror:'));
 db.once("open", function(){
 console.log("Connection to DB succeeded")});
-// passport config
-// Use the existing connection
-// The Account model
-var Account =require('./models/account');
-passport.use(new LocalStrategy(Account.authenticate()));
-passport.serializeUser(Account.serializeUser());
-passport.deserializeUser(Account.deserializeUser());
+
+
 
 // We can seed the collection if needed on server start
 async function recreateDB(){
@@ -37,21 +47,21 @@ async function recreateDB(){
 await Iphone.deleteMany();
   
   let instance1 = new
-  Iphone({iphone_model:"Fourteen Series", iphone_Size:'large',
+  Iphone({iphone_model:"Fourteen", iphone_Size:'large',
   iphone_Cost:999});
   instance1.save( function(err,doc) {
   if(err) return console.error(err);
   console.log("First object saved")
   });
   let instance2 = new
-  Iphone({iphone_model:"Thirteen Series", iphone_Size:'medium',
+  Iphone({iphone_model:"Thirteen", iphone_Size:'medium',
   iphone_Cost:1100});
   instance2.save( function(err,doc) {
   if(err) return console.error(err);
   console.log("Second object saved")
   });
   let instance3 = new
-  Iphone({iphone_model:"Twelve Series", iphone_Size:'small',
+  Iphone({iphone_model:"Twelve", iphone_Size:'small',
   iphone_Cost:1200});
    instance3.save( function(err,doc) {
    if(err) return console.error(err);
@@ -86,8 +96,8 @@ app.use(require('express-session')({
   resave: false,
   saveUninitialized: false
   }));
-  app.use(passport.initialize());
-  app.use(passport.session());
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
@@ -97,28 +107,13 @@ app.use('/gridbuild', gridbuildRouter);
 app.use('/selector', selectorRouter);
 app.use('/resource', resourceRouter);
 
-var authSchema = mongoose.Schema({ 
-  username: String,
-  password: String
-});
-authSchema.methods.validPassword = function( pwd ) {
-  // EXAMPLE CODE!
-  return ( this.password === pwd );
-};
-
-passport.use(new LocalStrategy(
-  function (username, password, done) {
-    Account.findOne({ username: username }, function (err, user) {
-      if (err) { return done(err); }
-      if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
-      }
-     // if (!user.validPassword(password)) {
-     //   return done(null, false, { message: 'Incorrect password.' });
-     // }
-      return done(null, user);
-    });
-  }));
+// passport config
+// Use the existing connection
+// The Account model
+var Account =require('./models/account');
+passport.use(new LocalStrategy(Account.authenticate()));
+passport.serializeUser(Account.serializeUser());
+passport.deserializeUser(Account.deserializeUser());
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
