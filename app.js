@@ -54,7 +54,7 @@ await Iphone.deleteMany();
   console.log("First object saved")
   });
   let instance2 = new
-  Iphone({iphone_model:"Thirteen", iphone_Size:'medium',
+  Iphone({iphone_model:"Thirteen", iphon_Size:'medium',
   iphone_Cost:1100});
   instance2.save( function(err,doc) {
   if(err) return console.error(err);
